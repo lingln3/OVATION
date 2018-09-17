@@ -1,0 +1,9 @@
+package com.ovation.point;
+/**
+ * 枚举出点的类型：模拟量点，数字量点，打包点
+ * @author snpas
+ *
+ */
+public enum POINT_TYPE {
+	
+}

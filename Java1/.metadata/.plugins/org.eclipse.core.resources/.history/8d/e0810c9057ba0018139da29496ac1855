@@ -6,8 +6,5 @@ package com.ovation.point;
  *
  */
 public class POINT {
-	private String name;
-	private String description;
-	private QUALITY quality;//四种
-	private POINT_TYPE value;//点的值类型由其类型决定
+
 }

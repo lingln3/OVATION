@@ -1,0 +1,5 @@
+package com.ovation.point;
+
+public class QUALITY extends Enum<E> {
+
+}

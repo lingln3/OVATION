@@ -36,6 +36,7 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.NegativeArraySizeException"/>
 <fullyQualifiedTypeName name="com.ovation.suanfa.FLIPFLOP"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="com.ovation.tools.Out"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="com.ovation.point.POINT"/>
 </qualifiedTypeNameHistroy>
