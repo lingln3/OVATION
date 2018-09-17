@@ -1,0 +1,21 @@
+package duotaiceshi;
+/**
+ * 进行Java多态和动态绑定学习
+ * @author snpas
+ *
+ */
+public class DuotaiTest {
+	
+}
+class Father{
+	private int money;
+	public void money(int m){
+		money = m;
+	}
+}
+class Son extends Father{
+	private double money;
+	public void money(double m){
+		money = m;
+	}
+}

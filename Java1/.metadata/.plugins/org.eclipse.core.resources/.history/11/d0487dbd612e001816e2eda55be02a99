@@ -1,0 +1,32 @@
+package duotaiceshi;
+
+public class InstanceofTest {
+	public static void main(String[] args){
+		People p1 = new People();
+		People p2 = new Teacher();//向上转型
+		People p3 = new Doctor();
+		Teacher t1 = new Teacher();
+		t1 = (Teacher) p2;
+		t1 = (Teacher)p1;
+		People[] p = {p1,p2,p3};
+		for(People ps :p){
+			if(ps instanceof People){
+				System.out.println("我是普通人");
+			}
+			if(ps instanceof Teacher){
+				System.out.println("我是老师");
+			}
+			if(ps instanceof Doctor){
+				System.out.println("我是医生");
+			}
+		}
+	}
+}
+class People{
+}
+class Teacher extends People{
+	
+}
+class Doctor extends People{
+	
+}

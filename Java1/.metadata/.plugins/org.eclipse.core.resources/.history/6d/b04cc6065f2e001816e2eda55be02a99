@@ -1,0 +1,15 @@
+package duotaiceshi;
+
+public class InstanceofTest {
+	public static void main(String[] args){
+		
+	}
+}
+class People{
+}
+class Teacher extends People{
+	
+}
+class Doctor extends People{
+	
+}
