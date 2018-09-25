@@ -33,10 +33,11 @@
 <fullyQualifiedTypeName name="java.awt.Window.Type"/>
 <fullyQualifiedTypeName name="java.security.KeyStore.PrivateKeyEntry"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.NegativeArraySizeException"/>
 <fullyQualifiedTypeName name="com.ovation.suanfa.FLIPFLOP"/>
 <fullyQualifiedTypeName name="com.ovation.tools.Out"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="com.ovation.point.POINT"/>
+<fullyQualifiedTypeName name="net.sf.json.JSONObject"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

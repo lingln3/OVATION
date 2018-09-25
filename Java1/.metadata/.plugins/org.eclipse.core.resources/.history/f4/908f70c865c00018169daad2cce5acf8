@@ -1,0 +1,73 @@
+package com.lina.excel;
+
+import java.io.File;
+
+import javax.swing.RowFilter;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
+
+import net.sf.json.JSONArray;
+
+public class Excel2JSONHelper {
+	public static void main(String[] args) {
+		Sheet sheet;
+		Workbook book;
+		Cell cell1,cell2,cell3,cell4,cell5;
+		JSONArray array = new JSONArray();
+	
+	}
+	/*
+	 * 文件过滤器
+	 */
+	private boolean fileNameFilter(File file)
+	{
+		boolean endWith = false;
+		if(file != null){
+			String fileName = file.getName();
+			endWith = fileName.endsWith(".xls")||fileName.endsWith(".xlsx");
+		}
+		return endWith;
+	}
+	/*
+	 * 获取表头行
+	 */
+	private Row getHeaderRow(Sheet sheet,int index){
+		Row headerRow = null;
+		if(sheet != null){
+			headerRow = sheet.getRow(index);
+		}
+		return headerRow;
+	}
+	
+	private Object getCellValue(Row row,int cellIndex,FormulaEvaluator formula){
+		Cell cell = row.getCell(cellIndex);
+//		CellType cellType = CellType.STRING;
+		if(cell != null){
+			switch(cell.getCellType()){
+			//String类型
+			case STRING:
+				return cell.getRichStringCellValue().getString();
+			case NUMERIC:
+				if(DateUtil.isCellDateFormatted(cell)){
+					return cell.getDateCellValue().getTime();
+				}else{
+					return cell.getNumericCellValue();
+				}
+			case BOOLEAN:
+				return cell.getBooleanCellValue();
+			//公式
+			case FORMULA:
+				return formula.evaluate(cell).getNumberValue();
+			default:
+					return null;
+			}
+		}
+		return null;
+	}
+}

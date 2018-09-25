@@ -1,0 +1,23 @@
+package com.lina.excel;
+
+import java.io.File;
+
+public class Excel2JSONHelper {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	/*
+	 * ÎÄ¼þ¹ýÂËÆ÷
+	 */
+	private boolean fileNameFilter(File file)
+	{
+		boolean endWith = false;
+		if(file != null){
+			String fileName = file.getName();
+			endWith = fileName.endsWith(".xls")||fileName.endsWith(".xlsx");
+		}
+		return endWith;
+	}
+}

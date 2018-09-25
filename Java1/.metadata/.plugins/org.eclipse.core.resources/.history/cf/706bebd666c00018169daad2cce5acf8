@@ -1,0 +1,143 @@
+package com.lina.excel;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.RowFilter;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
+
+import net.sf.json.JSONArray;
+
+public class Excel2JSONHelper {
+	public static void main(String[] args) {
+		Sheet sheet;
+		Workbook book;
+		Cell cell1,cell2,cell3,cell4,cell5;
+		JSONArray array = new JSONArray();
+	
+	}
+	/*
+	 * 文件过滤器
+	 */
+	private boolean fileNameFilter(File file)
+	{
+		boolean endWith = false;
+		if(file != null){
+			String fileName = file.getName();
+			endWith = fileName.endsWith(".xls")||fileName.endsWith(".xlsx");
+		}
+		return endWith;
+	}
+	/*
+	 * 获取表头行
+	 */
+	private Row getHeaderRow(Sheet sheet,int index){
+		Row headerRow = null;
+		if(sheet != null){
+			headerRow = sheet.getRow(index);
+		}
+		return headerRow;
+	}
+	/**
+	 * 获取表格中单元格的value
+	 * @param row
+	 * @param cellIndex
+	 * @param formula
+	 * @return
+	 */
+	private Object getCellValue(Row row,int cellIndex,FormulaEvaluator formula){
+		Cell cell = row.getCell(cellIndex);
+//		CellType cellType = CellType.STRING;
+		if(cell != null){
+			switch(cell.getCellType()){
+			//String类型
+			case STRING:
+				return cell.getRichStringCellValue().getString();
+			case NUMERIC:
+				if(DateUtil.isCellDateFormatted(cell)){
+					return cell.getDateCellValue().getTime();
+				}else{
+					return cell.getNumericCellValue();
+				}
+			case BOOLEAN:
+				return cell.getBooleanCellValue();
+			//公式
+			case FORMULA:
+				return formula.evaluate(cell).getNumberValue();
+			default:
+					return null;
+			}
+		}
+		return null;
+	}
+	/**
+	 * 获取表头value
+	 * @param headerRow
+	 * @param cellIndex
+	 * @param type
+	 * @return
+	 */
+	private String getHeaderCellValue(Row headerRow,int cellIndex,int type){
+		Cell cell = headerRow.getCell(cellIndex);
+		String headerValue = null;
+		if(cell != null){
+			headerValue = cell.getRichStringCellValue().getString();
+		}
+		return headerValue;
+	}
+	/**
+	 * 读取表格数据
+	 * @param file
+	 * @param headerIndex
+	 * @param headType
+	 * @return
+	 */
+	public JSONArray readExcel(File file,int headerIndex,int headType){
+		List<Map<String, Object>> lists = new ArrayList<Map<String,Object>>();
+		//如果文件非excel文件，则不处理
+		if(!fileNameFilter(file)){
+			return null;
+		}else{
+			try{
+				//加载excel表格
+				WorkbookFactory wbFactory = new WorkbookFactory();
+				Workbook workbook = wbFactory.create(file);
+				//读取第一个sheet页
+				Sheet sheet = workbook.getSheetAt(0);
+				//读取表头行
+				Row headerRow = getHeaderRow(sheet, headerIndex);
+				//读取数据
+				FormulaEvaluator formula = workbook.getCreationHelper().createFormulaEvaluator();
+				for(int r = headerIndex+1; r <= sheet.getLastRowNum(); r++){
+					Row dataRow = sheet.getRow(r);
+					Map<String, Object> map = new HashMap<String,Object>();
+					for(int h = 0; h < dataRow.getLastCellNum(); h++){
+						//表头为key
+						String key = getHeaderCellValue(headerRow, h, headType);
+						//数据为value
+						Object value = getCellValue(dataRow, h, formula);
+						if(!key.equals("") && !key.equals("null") && key != null){
+							map.put(key, value);
+						}
+					}
+					lists.add(map);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		JSONArray jsonArray = JSONArray.fromObject(lists);
+		return jsonArray;
+	}
+}

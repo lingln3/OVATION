@@ -1,7 +1,0 @@
-package com.ovation.tools;
-
-public class Out {
-	public void out(String s){
-		System.out.println(s);
-	}
-}
