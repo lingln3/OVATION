@@ -1,0 +1,7 @@
+package com.lina.tools;
+
+public class CuteTools {
+	public void out(Object o){
+		System.out.println(o.toString());
+	}
+}

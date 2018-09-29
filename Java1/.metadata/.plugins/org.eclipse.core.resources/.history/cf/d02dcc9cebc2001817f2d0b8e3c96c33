@@ -1,0 +1,50 @@
+package com.ovation.macro;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.lina.tools.CuteTools;
+
+/**
+ * 画面宏比对小工具
+ * @author gulina
+ *
+ */
+public class DiagramMacros {
+	
+	public static void main(String[] args){
+		String path = "E:\国核自仪\宏\画面宏\宏库\宏";
+		DiagramMacros diagramMacros = new DiagramMacros();
+		List<File> fileList = diagramMacros.traverseFolder(path);
+		CuteTools.out(fileList.toString());
+	}
+	public String pathName(String path){
+		
+		return "";
+	}
+	/**
+	 * 遍历path路径下所有文件
+	 * @param path 文件路径
+	 */
+	public List<File> traverseFolder(String path){
+		File file = new File(path);
+		List<File> fileList = new ArrayList<File>();
+		if(!file.exists()){
+			CuteTools.out("该文件路径不存在！");
+		}else{
+			File[] files = file.listFiles();//获取该路径下所有文件
+			if(files == null || files.length == 0){
+				CuteTools.out("该文件夹为空！");
+			}else{
+				for(File f:files){
+					if(f.getName().startsWith("MACRO")
+							&& f.getName().endsWith(".src")){
+						fileList.add(f);
+					}
+				}
+			}
+ 		}
+		return fileList;
+	}
+}

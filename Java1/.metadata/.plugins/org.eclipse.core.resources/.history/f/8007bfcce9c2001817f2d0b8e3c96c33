@@ -1,0 +1,28 @@
+package com.ovation.macro;
+
+import java.io.File;
+
+import com.lina.tools.CuteTools;
+
+/**
+ * 画面宏比对小工具
+ * @author snpas
+ *
+ */
+public class DiagramMacros {
+	/**
+	 * 遍历path路径下所有文件
+	 * @param path 文件路径
+	 */
+	public void traverseFolder(String path){
+		File file = new File(path);
+		if(!file.exists()){
+			CuteTools.out("该文件路径不存在！");
+		}else{
+			File[] files = file.listFiles();//获取该路径下所有文件
+			if(files == null || files.length == 0){
+				CuteTools.out("该文件夹为空！");
+			}
+ 		}
+	}
+}
